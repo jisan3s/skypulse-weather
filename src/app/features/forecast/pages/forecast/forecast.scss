@@ -1,0 +1,37 @@
+.page-grid,
+.forecast-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.card-panel {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    box-shadow: var(--panel-shadow);
+    padding: 1.5rem;
+}
+
+.forecast-grid {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.forecast-card {
+    background: var(--surface-muted);
+}
+
+.forecast-card__time,
+.subtle,
+.empty-state {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}

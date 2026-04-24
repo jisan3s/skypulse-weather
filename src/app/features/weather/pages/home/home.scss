@@ -1,0 +1,113 @@
+.weather-page {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.card-panel {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    box-shadow: var(--panel-shadow);
+    padding: 1.5rem;
+}
+
+.toolbar,
+.search-panel__controls,
+.toolbar__actions,
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.section-heading h3 {
+    margin: 0;
+}
+
+.toolbar__actions {
+    flex-wrap: wrap;
+}
+
+.search-panel__controls {
+    align-items: end;
+}
+
+.summary-grid,
+.content-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.content-grid {
+    grid-template-columns: 1.3fr 1fr;
+}
+
+.metric-card__icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hourly-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.hourly-card {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: var(--surface-muted);
+    border: 1px solid var(--border-color);
+}
+
+.hourly-card__time {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.subtle,
+.empty-state {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+@media (max-width: 991px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .toolbar,
+    .search-panel__controls,
+    .section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .toolbar__actions {
+        width: 100%;
+    }
+
+    .toolbar__actions .btn,
+    .search-panel__controls .btn {
+        width: 100%;
+    }
+}

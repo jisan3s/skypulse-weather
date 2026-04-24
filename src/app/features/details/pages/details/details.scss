@@ -1,0 +1,36 @@
+.page-grid,
+.details-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.card-panel {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    box-shadow: var(--panel-shadow);
+    padding: 1.5rem;
+}
+
+.details-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.detail-card {
+    background: var(--surface-muted);
+}
+
+.eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--accent-color);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.subtle,
+.empty-state {
+    margin: 0;
+    color: var(--text-muted);
+}

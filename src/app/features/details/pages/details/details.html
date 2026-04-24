@@ -1,0 +1,41 @@
+<section class="page-grid">
+    <header class="card-panel">
+        <p class="eyebrow">Details</p>
+        <h1>Current Conditions</h1>
+        <p class="subtle">A compact operational view of the live weather metrics behind the dashboard.</p>
+    </header>
+
+    @if (loading && !weatherData) {
+        <app-loader message="Loading weather details..." />
+    } @else if (weatherData) {
+        <div class="details-grid">
+            <article class="card-panel detail-card">
+                <p class="eyebrow">Temperature</p>
+                <h2>{{ weatherData.current_weather.temperature }}{{ weatherData.hourly_units?.temperature_2m ?? '°C' }}</h2>
+                <p class="subtle">Current observation</p>
+            </article>
+
+            <article class="card-panel detail-card">
+                <p class="eyebrow">Wind</p>
+                <h2>{{ weatherData.current_weather.windspeed }} km/h</h2>
+                <p class="subtle">Current observation</p>
+            </article>
+
+            <article class="card-panel detail-card">
+                <p class="eyebrow">Humidity</p>
+                <h2>{{ weatherData.hourly.relative_humidity_2m[0] }}%</h2>
+                <p class="subtle">Latest hourly value</p>
+            </article>
+
+            <article class="card-panel detail-card">
+                <p class="eyebrow">Weather Code</p>
+                <h2>{{ weatherData.current_weather.weathercode }}</h2>
+                <p class="subtle">Open-Meteo condition code</p>
+            </article>
+        </div>
+    } @else {
+        <div class="card-panel empty-state">
+            Weather details will appear here after the first data load completes.
+        </div>
+    }
+</section>

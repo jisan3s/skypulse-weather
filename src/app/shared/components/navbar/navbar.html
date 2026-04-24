@@ -1,0 +1,15 @@
+<nav class="app-navbar">
+    <a class="app-navbar__brand" routerLink="/">
+        <span class="app-navbar__logo">SP</span>
+        <span>
+            <strong>SkyPulse</strong>
+            <small>Weather intelligence</small>
+        </span>
+    </a>
+
+    <div class="app-navbar__links">
+        <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+        <a routerLink="/forecast" routerLinkActive="is-active">Forecast</a>
+        <a routerLink="/details" routerLinkActive="is-active">Details</a>
+    </div>
+</nav>

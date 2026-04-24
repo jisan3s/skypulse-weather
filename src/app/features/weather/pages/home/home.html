@@ -1,0 +1,129 @@
+<section class="weather-page">
+    <div class="toolbar card-panel">
+        <div class="toolbar__meta">
+            <p class="eyebrow">Live Conditions</p>
+            <h1>Weather Dashboard</h1>
+            <p class="subtle">
+                Auto refresh every 5 minutes.
+                @if (lastUpdated) {
+                    Last updated {{ lastUpdated | date: 'mediumTime' }}.
+                }
+            </p>
+        </div>
+
+        <div class="toolbar__actions">
+            <button class="btn btn-outline-primary" type="button" (click)="loadWeather()" [disabled]="loading">
+                Refresh
+            </button>
+            <button class="btn btn-outline-secondary" type="button" (click)="toggleTheme()">
+                {{ isDarkMode ? 'Light mode' : 'Dark mode' }}
+            </button>
+        </div>
+    </div>
+
+    <div class="card-panel search-panel">
+        <label class="form-label" for="city-search">Search by city</label>
+        <div class="search-panel__controls">
+            <input
+                id="city-search"
+                type="text"
+                class="form-control"
+                [(ngModel)]="city"
+                placeholder="Enter city name"
+                [disabled]="loading"
+            />
+            <button
+                class="btn btn-primary"
+                type="button"
+                (click)="searchCity()"
+                [disabled]="loading || !city.trim()"
+            >
+                Search
+            </button>
+        </div>
+    </div>
+
+    @if (errorMessage) {
+        <div class="alert alert-warning card-panel" role="alert">
+            {{ errorMessage }}
+        </div>
+    }
+
+    @if (loading) {
+        <app-loader message="Loading the latest weather data..." />
+    } @else if (weatherData) {
+        <div class="summary-grid">
+            <article class="card-panel metric-card">
+                <p class="metric-card__icon">{{ getWeatherIcon(weatherData.current_weather.weathercode) }}</p>
+                <p class="eyebrow">Current Weather</p>
+                <h2>{{ weatherData.current_weather.temperature }}{{ weatherData.hourly_units?.temperature_2m ?? '°C' }}</h2>
+                <p class="subtle">Observed at {{ weatherData.current_weather.time | date: 'shortTime' }}</p>
+            </article>
+
+            <article class="card-panel metric-card">
+                <p class="metric-card__icon">💨</p>
+                <p class="eyebrow">Wind Speed</p>
+                <h2>{{ weatherData.current_weather.windspeed }} km/h</h2>
+                <p class="subtle">Measured for your current selection.</p>
+            </article>
+
+            <article class="card-panel metric-card">
+                <p class="metric-card__icon">📍</p>
+                <p class="eyebrow">Coordinates</p>
+                <h2>{{ lat | number: '1.2-2' }}, {{ lon | number: '1.2-2' }}</h2>
+                <p class="subtle">Forecasts are aligned to local time.</p>
+            </article>
+        </div>
+
+        <div class="content-grid">
+            <article class="card-panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Trend</p>
+                        <h3>12-hour Temperature</h3>
+                    </div>
+                </div>
+
+                @if (hasChartData) {
+                    <apx-chart
+                        [series]="chartSeries"
+                        [chart]="chartDetails"
+                        [xaxis]="chartXaxis"
+                        [title]="chartTitle"
+                        [dataLabels]="chartDataLabels"
+                        [stroke]="chartStroke">
+                    </apx-chart>
+                } @else {
+                    <p class="empty-state">No hourly temperature data available yet.</p>
+                }
+            </article>
+
+            <article class="card-panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Next Hours</p>
+                        <h3>Hourly Forecast</h3>
+                    </div>
+                </div>
+
+                @if (weatherData.hourly.temperature_2m.length) {
+                    <div class="hourly-grid">
+                        @for (time of weatherData.hourly.time.slice(0, 8); track time; let i = $index) {
+                            <div class="hourly-card">
+                                <p class="hourly-card__time">{{ time | date: 'shortTime' }}</p>
+                                <strong>{{ weatherData.hourly.temperature_2m[i] }}{{ weatherData.hourly_units?.temperature_2m ?? '°C' }}</strong>
+                                <span>Humidity {{ weatherData.hourly.relative_humidity_2m[i] }}%</span>
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <p class="empty-state">No hourly data available.</p>
+                }
+            </article>
+        </div>
+    } @else {
+        <div class="card-panel empty-state">
+            Weather data is not available yet. Try refreshing the dashboard.
+        </div>
+    }
+</section>

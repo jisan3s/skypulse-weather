@@ -1,0 +1,29 @@
+<section class="page-grid">
+    <header class="page-header card-panel">
+        <p class="eyebrow">Forecast</p>
+        <h1>Upcoming Hours</h1>
+        <p class="subtle">A quick view of temperature, humidity, and wind for the next 12 hours.</p>
+    </header>
+
+    @if (loading && !weatherData) {
+        <app-loader message="Preparing the forecast..." />
+    } @else if (weatherData) {
+        <div class="forecast-grid">
+            @for (time of weatherData.hourly.time.slice(0, 12); track time; let i = $index) {
+                <article class="card-panel forecast-card">
+                    <p class="forecast-card__time">{{ time | date: 'EEE, h:mm a' }}</p>
+                    <h2>{{ weatherData.hourly.temperature_2m[i] }}{{ weatherData.hourly_units?.temperature_2m ?? '°C' }}</h2>
+                    <p>Humidity {{ weatherData.hourly.relative_humidity_2m[i] }}%</p>
+                    <p>Wind {{ weatherData.hourly.wind_speed_10m[i] }} km/h</p>
+                    @if (location) {
+                        <small>{{ location.lat | number: '1.1-1' }}, {{ location.lon | number: '1.1-1' }}</small>
+                    }
+                </article>
+            }
+        </div>
+    } @else {
+        <div class="card-panel empty-state">
+            Forecast data will appear here after the first weather load completes.
+        </div>
+    }
+</section>
