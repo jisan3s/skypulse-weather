@@ -51,6 +51,17 @@ Publish Directory: dist/skypulse-weather
 
 The included [`render.yaml`](./render.yaml) also defines a catch-all rewrite to `/index.html` so Angular routes like `/forecast` and `/details` work correctly after refreshes.
 
+## Deploy To GitHub Pages
+
+This repo also includes a GitHub Pages workflow at [`.github/workflows/deploy-pages.yml`](./.github/workflows/deploy-pages.yml).
+
+1. Push the repository to GitHub.
+2. In GitHub, open `Settings` -> `Pages`.
+3. Set `Source` to `GitHub Actions`.
+4. Push to `main` to trigger the deploy workflow.
+
+The workflow builds the app with a repo-aware base href of `/skypulse-weather/` and creates a `404.html` fallback so Angular routes continue to work on refresh.
+
 ## Project Structure
 
 - `src/app/core/models`: typed API models
