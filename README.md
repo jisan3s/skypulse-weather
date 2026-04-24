@@ -13,9 +13,9 @@ SkyPulse is an Angular 21 weather dashboard built around Open-Meteo data. It use
 
 ## Rendering Strategy
 
-- `Home`, `Forecast`, and `Details` are configured for client rendering in `src/app/app.routes.server.ts`
+- `Home`, `Forecast`, and `Details` are client-rendered routes
 - Route components are lazy-loaded in `src/app/app.routes.ts`
-- This keeps SSR complexity away from geolocation and local-storage-driven screens while still preserving Angular SSR support for future static routes
+- The app is built as a static SPA, which is a better fit for browser-only features such as geolocation and local storage
 
 ## Development
 
@@ -36,6 +36,21 @@ npm run build
 npm test -- --watch=false
 ```
 
+## Deploy To Render
+
+This project is configured for a Render Static Site deployment.
+
+1. Push the repository to GitHub.
+2. In Render, create a new `Static Site` from the repo.
+3. Use these settings if Render does not auto-detect them:
+
+```bash
+Build Command: npm install && npm run build
+Publish Directory: dist/skypulse-weather
+```
+
+The included [`render.yaml`](./render.yaml) also defines a catch-all rewrite to `/index.html` so Angular routes like `/forecast` and `/details` work correctly after refreshes.
+
 ## Project Structure
 
 - `src/app/core/models`: typed API models
@@ -50,4 +65,4 @@ npm test -- --watch=false
 
 - Weather responses are cached in memory and in `localStorage` with automatic cleanup of stale entries
 - The charting library is route-lazy-loaded with the home page, which reduced the initial bundle compared to the previous eager setup
-- The app intentionally avoids prerendering the interactive weather routes because their first render depends on browser APIs
+- The app intentionally stays browser-rendered because its interactive routes depend on browser APIs
